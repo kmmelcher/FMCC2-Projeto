@@ -4,6 +4,7 @@ import random
 NUMEROUSUARIOS = 10000
 
 def cadastramento_completo(usuarios):
+    """ Testa se todos os usuário foram cadastrados """
     for i in range(NUMEROUSUARIOS):
         if i not in usuarios:
             return False
@@ -19,10 +20,6 @@ def algoritmo1():
             if id_aleatorio not in usuarios:
                 usuarios.append(id_aleatorio)
                 break
-
-    #print (usuarios)
-    #print (cadastramento_completo(usuarios))
-                
 
 def algoritmo2():
     pass
