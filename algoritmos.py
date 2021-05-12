@@ -29,7 +29,7 @@ def numero_do_meio(numero, digitos):
       
     return numero_do_meio
 
-def quadrado_do_meio(semente_geradora, digitos=""):
+def quadrado_do_meio(semente_geradora, digitos):
     """ Retorna o período de repetição de uma semente do algoritmo do quadrado
     do meio.
     Se nenhuma semente for passada, será uma semente aleatória.
@@ -71,9 +71,11 @@ def menu():
         escolha = int(input(mensagem))
         if escolha == 1:
             semente = input("Insira uma semente: ")
-            digitos = ""
+            
             if not semente:
                 digitos = int(input("Quantos digitos terá o número?"))
+            else:
+                digitos = len(semente)
             
             periodo = quadrado_do_meio(semente, digitos)
             
