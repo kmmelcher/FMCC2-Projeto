@@ -1,16 +1,24 @@
 import time
 
 def gera_semente_aleatoria(digitos):
-    """ Retorna uma semente aleatória de 4 dígitos
-    Essa semente é composta pelos últimos 4 digitos do tempo, em nanossegundos,
-    desde que o computador atual ligou """
+    """ Retorna uma semente aleatória com um dado número de dígitos.
+    Essa semente é composta pelos últimos digitos do tempo, em nanossegundos,
+    desde que o computador atual ligou
+    
+    :digitos número de digitos 
+    """
     if not digitos:
         digitos = 4
 
     return int(str(time.clock_gettime_ns(time.CLOCK_BOOTTIME))[digitos:])
 
 def numero_do_meio(numero, digitos):
-    """ Retorna os digitos do meio de um número """
+    """ Retorna os digitos do meio de um número
+    
+    :numero (str) numero para extrair o meio
+    :digitos (int) quantidade de digitos a serem extraidos do numero
+    :autores Kilian e Vitor
+    """
     meio = len(numero) // 2
 
     if digitos % 2 == 0:
@@ -25,7 +33,12 @@ def numero_do_meio(numero, digitos):
 def quadrado_do_meio(semente_geradora, digitos=""):
     """ Retorna o período de repetição de uma semente do algoritmo do quadrado
     do meio.
-    Se nenhuma semente for passada, será uma semente aleatória. """
+    Se nenhuma semente for passada, será uma semente aleatória.
+    
+    :semente_geradora (str) semente geradora da sequência de números aleatórios
+    :digitos (str) digitos da semente geradora
+    :autores Kilian e Vitor
+    """
     
     if not semente_geradora:
         semente_geradora = gera_semente_aleatoria(digitos)
@@ -48,7 +61,7 @@ def quadrado_do_meio(semente_geradora, digitos=""):
     return periodo
 
 def menu():
-
+    """ Menu para interação com o usuário """
     mensagem = "\n\n--- Gerador de números aleatórios ---\n"
     mensagem += "\nQual algoritmo você deseja usar?"
     mensagem += "\n(1) - Algoritmo do quadrado do meio"
