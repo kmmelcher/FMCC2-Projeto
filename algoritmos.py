@@ -20,14 +20,13 @@ def numero_do_meio(numero, digitos):
     :autores Kilian e Vitor
     """
     meio = len(numero) // 2
+    variavel = digitos//2
 
     if digitos % 2 == 0:
-        variavel = digitos//2
+        numero_do_meio = int(str(numero[meio-variavel : meio+variavel]))
     else:
-        variavel = (digitos//2) + 1
-    
-    numero_do_meio = int(str(numero[meio-variavel : meio+variavel]))
-    
+        numero_do_meio = int(str(numero[meio-variavel : meio+variavel+1]))
+      
     return numero_do_meio
 
 def quadrado_do_meio(semente_geradora, digitos=""):
@@ -86,4 +85,3 @@ def menu():
             break
     
 menu()
-
