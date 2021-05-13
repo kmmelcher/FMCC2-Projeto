@@ -6,18 +6,42 @@ def gera_semente_aleatoria(digitos):
     desde que o computador atual ligou
     
     :digitos número de digitos 
+
+    autores Kilian
     """
     if not digitos:
         digitos = 4
 
     return int(str(time.clock_gettime_ns(time.CLOCK_BOOTTIME))[digitos:])
 
+
+def adiciona_zeros(numero, digitos):
+    """ Adiciona zeros na frente do número de acordo com o seu tamanho.
+    Se o número de dígitos for um número par, multiplica-se por dois
+    e adiciona zeros até completar a quantidade de digitos desejada.
+    Se for ímpar, multiplica-se por dois e soma-se um.
+    De forma que seja possível pegar o número do meio.
+    
+    :numero (str) número a ser adicionado zeros
+    :digitos (int) quantidade de digitos a ser checado
+    
+    autores Kilian, Vitor
+    """
+
+    if digitos % 2 == 0:
+        numero.zfill(digitos * 2)
+    else:
+        numero.zfill(digitos * 2 + 1)
+
+    return numero
+
 def numero_do_meio(numero, digitos):
     """ Retorna os digitos do meio de um número
     
     :numero (str) numero para extrair o meio
     :digitos (int) quantidade de digitos a serem extraidos do numero
-    :autores Kilian e Vitor
+    
+    autores Kilian, Vitor
     """
     meio = len(numero) // 2
     variavel = digitos//2
@@ -36,7 +60,8 @@ def quadrado_do_meio(semente_geradora, digitos):
     
     :semente_geradora (str) semente geradora da sequência de números aleatórios
     :digitos (str) digitos da semente geradora
-    :autores Kilian e Vitor
+    
+    autores Kilian, Vitor
     """
     
     if not semente_geradora:
@@ -54,13 +79,16 @@ def quadrado_do_meio(semente_geradora, digitos):
         if len(quadrado_da_semente) <= digitos_semente_geradora:
             semente = int(quadrado_da_semente)
         else:
-            quadrado_da_semente = quadrado_da_semente.zfill(digitos_semente_geradora * 2)
+            quadrado_da_semente = adiciona_zeros(quadrado_da_semente, digitos_semente_geradora)
             semente = numero_do_meio(quadrado_da_semente, digitos_semente_geradora)
 
     return periodo
 
 def menu():
-    """ Menu para interação com o usuário """
+    """ Menu para interação com o usuário 
+    
+    autores Kilian
+    """
     mensagem = "\n\n--- Gerador de números aleatórios ---\n"
     mensagem += "\nQual algoritmo você deseja usar?"
     mensagem += "\n(1) - Algoritmo do quadrado do meio"
