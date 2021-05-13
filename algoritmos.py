@@ -12,8 +12,7 @@ def gera_semente_aleatoria(digitos):
     if not digitos:
         digitos = 4
 
-    return int(str(time.clock_gettime_ns(time.CLOCK_BOOTTIME))[digitos:])
-
+    return str(time.clock_gettime_ns(time.CLOCK_BOOTTIME))[digitos:]
 
 def adiciona_zeros(numero, digitos):
     """ Adiciona zeros na frente do número de acordo com o seu tamanho.
@@ -27,7 +26,6 @@ def adiciona_zeros(numero, digitos):
     
     autores Kilian, Vitor
     """
-
     if digitos % 2 == 0:
         numero.zfill(digitos * 2)
     else:
@@ -54,8 +52,7 @@ def numero_do_meio(numero, digitos):
     return numero_do_meio
 
 def quadrado_do_meio(semente_geradora, digitos):
-    """ Retorna o período de repetição de uma semente do algoritmo do quadrado
-    do meio.
+    """ Retorna o período de repetição gerado por uma semente no algoritmo do quadrado do meio.
     Se nenhuma semente for passada, será uma semente aleatória.
     
     :semente_geradora (str) semente geradora da sequência de números aleatórios
@@ -63,16 +60,15 @@ def quadrado_do_meio(semente_geradora, digitos):
     
     autores Kilian, Vitor
     """
-    
     if not semente_geradora:
         semente_geradora = gera_semente_aleatoria(digitos)
     
     semente = int(semente_geradora)
     digitos_semente_geradora = len(semente_geradora)
-    periodo = set()
+    periodo = list()
 
     while semente not in periodo:
-        periodo.add(semente)
+        periodo.append(semente)
 
         quadrado_da_semente = str(semente ** 2)
 
@@ -83,6 +79,98 @@ def quadrado_do_meio(semente_geradora, digitos):
             semente = numero_do_meio(quadrado_da_semente, digitos_semente_geradora)
 
     return periodo
+
+def is_primo(numero):
+    """ Checa se um número é primo 
+    
+    autores Kilian
+    """
+    if numero == 1: return False
+    
+    for i in range(2, numero//2+1):
+        if (numero % i) == 0:
+            return False
+    return True
+
+def get_fatores_primos(numero):
+    """ Retorna os fatores primos do número
+    
+    autores Kilian
+    """
+    fatores = []
+
+    for i in range(1, numero//2+1):
+        if is_primo(i) and numero % i == 0:
+            fatores.append(i)
+
+    return fatores
+
+def get_A(m):
+    """
+    Condições de A:
+    p: 4 | M
+    q: 4 | A-1
+    r: A > 0
+    s: A-1 é divisivel por todos os fatores primos de m. 
+    (p → q) ∧ r ∧ s
+
+    autores Kilian, Daniel
+    """
+    a = 1
+    if m % 4 == 0:
+        a = 5
+    
+    fatores = get_fatores_primos(m)
+
+    while True:
+        for f in fatores:
+            if (a-1) % f == 0:
+                return a 
+        a += 1
+
+def get_C(m):
+    """
+    Condições de C:
+    p: C > 0
+    q: C é primo relativo a M
+    p ∧ q
+
+    autores Kilian, Daniel
+    """
+    c = 2
+    while True:
+        if m % c != 0:
+            return c
+        c += 1
+
+def congruencia_linear(semente_geradora, m):
+    """ Retorna o período de repetição gerado por uma semente no algoritmo da congruência linear.
+    
+    autores Kilian, Daniel
+    """
+
+    m = int(m)
+    a = get_A(m)
+    c = get_C(m)
+    
+    periodo = list()
+
+    semente_geradora = int(semente_geradora)
+    elemento = semente_geradora
+
+    while elemento not in periodo:
+        periodo.append(elemento)
+        elemento = ( a * elemento + c ) % m
+
+    return periodo
+
+def salvar(resultado):
+    escolha = input("Você deseja salvar esse resultado? (y/N)")
+
+    if escolha == "y" or escolha == "Y":
+        pass
+    elif escolha == "n" or escolha == "N":
+        pass
 
 def menu():
     """ Menu para interação com o usuário 
@@ -101,7 +189,7 @@ def menu():
             semente = input("Insira uma semente: ")
             
             if not semente:
-                digitos = int(input("Quantos digitos terá o número?"))
+                digitos = int(input("Quantos digitos terá a semente aleatória?"))
             else:
                 digitos = len(semente)
             
@@ -109,8 +197,23 @@ def menu():
             
             print (f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos")
             print ("Conjunto dos elementos gerados: \n" + str(periodo))
+            
+            if len(periodo) > 1000:
+                salvar()
+
         elif escolha == 2:
-            pass
+
+            semente = input("Insira uma semente: ")
+            m = int(input("Escolha a o máximo de números aleatórios que você quer gerar: "))
+
+            periodo = congruencia_linear(semente, m)
+
+            print (f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos")
+            print ("Conjunto dos elementos gerados: \n" + str(periodo))
+
+            if len(periodo) > 1000:
+                salvar()
+
         elif escolha == 3:
             break
     
