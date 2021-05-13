@@ -148,7 +148,6 @@ def congruencia_linear(semente_geradora, m):
     
     autores Kilian, Daniel
     """
-
     m = int(m)
     a = get_A(m)
     c = get_C(m)
@@ -164,13 +163,26 @@ def congruencia_linear(semente_geradora, m):
 
     return periodo
 
-def salvar(resultado):
+def salvar(saida):
+    """ Salva a saida do programa em um arquivo 
+    
+    autores Kilian
+    """ 
     escolha = input("Você deseja salvar esse resultado? (y/N)")
 
     if escolha == "y" or escolha == "Y":
-        pass
-    elif escolha == "n" or escolha == "N":
-        pass
+        arquivo = open("saida.txt", "w")
+        arquivo.write(saida)    
+        arquivo.close()
+
+def saida(periodo):
+    """ Retorna uma mensagem com a saida do programa 
+    
+    autores Kilian
+    """
+    mensagem = f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos"
+    mensagem += "\nConjunto dos elementos gerados: \n" + str(periodo)     
+    return mensagem
 
 def menu():
     """ Menu para interação com o usuário 
@@ -186,8 +198,8 @@ def menu():
     while True:
         escolha = int(input(mensagem))
         if escolha == 1:
+
             semente = input("Insira uma semente: ")
-            
             if not semente:
                 digitos = int(input("Quantos digitos terá a semente aleatória?"))
             else:
@@ -195,11 +207,11 @@ def menu():
             
             periodo = quadrado_do_meio(semente, digitos)
             
-            print (f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos")
-            print ("Conjunto dos elementos gerados: \n" + str(periodo))
-            
+            resultado = saida(periodo)
+            print (resultado)
+
             if len(periodo) > 1000:
-                salvar()
+                salvar(resultado)
 
         elif escolha == 2:
 
@@ -207,12 +219,12 @@ def menu():
             m = int(input("Escolha a o máximo de números aleatórios que você quer gerar: "))
 
             periodo = congruencia_linear(semente, m)
-
-            print (f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos")
-            print ("Conjunto dos elementos gerados: \n" + str(periodo))
+            
+            resultado = saida(periodo)
+            print (resultado)
 
             if len(periodo) > 1000:
-                salvar()
+                salvar(resultado)
 
         elif escolha == 3:
             break
