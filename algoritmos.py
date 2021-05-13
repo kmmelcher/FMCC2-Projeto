@@ -148,7 +148,6 @@ def congruencia_linear(semente_geradora, m):
     
     autores Kilian, Daniel
     """
-    m = int(m)
     a = get_A(m)
     c = get_C(m)
     
@@ -217,6 +216,13 @@ def menu():
 
             semente = input("Insira uma semente: ")
             m = int(input("Escolha a o máximo de números aleatórios que você quer gerar: "))
+
+            if not semente:
+                semente = gera_semente_aleatoria(4)
+
+            if m > 65536:
+                print ("\nNúmero grande demais! Por razões de segurança isso não é permitido")
+                continue
 
             periodo = congruencia_linear(semente, m)
             
