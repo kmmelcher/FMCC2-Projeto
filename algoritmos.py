@@ -51,8 +51,8 @@ def numero_do_meio(numero, digitos):
       
     return numero_do_meio
 
-def quadrado_do_meio(semente_geradora, digitos):
-    """ Retorna o período de repetição gerado por uma semente no algoritmo do quadrado do meio.
+def meio_do_quadrado(semente_geradora, digitos):
+    """ Retorna o período de repetição gerado por uma semente no algoritmo do meio do quadrado.
     Se nenhuma semente for passada, será uma semente aleatória.
     
     :semente_geradora (str) semente geradora da sequência de números aleatórios
@@ -71,12 +71,8 @@ def quadrado_do_meio(semente_geradora, digitos):
         periodo.append(semente)
 
         quadrado_da_semente = str(semente ** 2)
-
-        if len(quadrado_da_semente) <= digitos_semente_geradora:
-            semente = int(quadrado_da_semente)
-        else:
-            quadrado_da_semente = adiciona_zeros(quadrado_da_semente, digitos_semente_geradora)
-            semente = numero_do_meio(quadrado_da_semente, digitos_semente_geradora)
+        quadrado_da_semente = adiciona_zeros(quadrado_da_semente, digitos_semente_geradora)
+        semente = numero_do_meio(quadrado_da_semente, digitos_semente_geradora)
 
     return periodo
 
@@ -179,7 +175,7 @@ def saida(periodo):
     
     autores Kilian
     """
-    mensagem = f"Essa semente gerou uma sequência de números aleatórios que se repetem a cada {len(periodo)} elementos"
+    mensagem = f"Essa semente gerou um período de {len(periodo)} elementos"
     mensagem += "\nConjunto dos elementos gerados: \n" + str(periodo)     
     return mensagem
 
@@ -188,9 +184,9 @@ def menu():
     
     autores Kilian
     """
-    mensagem = "\n\n--- Gerador de números aleatórios ---\n"
+    mensagem = "\n\n--- Gerador de números pseudo-aleatórios ---\n"
     mensagem += "\nQual algoritmo você deseja usar?"
-    mensagem += "\n(1) - Algoritmo do quadrado do meio"
+    mensagem += "\n(1) - Algoritmo do meio do quadrado"
     mensagem += "\n(2) - Algoritmo da congruência linear"
     mensagem += "\n(3) - Sair\n\n"
 
@@ -204,7 +200,7 @@ def menu():
             else:
                 digitos = len(semente)
             
-            periodo = quadrado_do_meio(semente, digitos)
+            periodo = meio_do_quadrado(semente, digitos)
             
             resultado = saida(periodo)
             print (resultado)
@@ -215,7 +211,7 @@ def menu():
         elif escolha == 2:
 
             semente = input("Insira uma semente: ")
-            m = int(input("Escolha a o máximo de números aleatórios que você quer gerar: "))
+            m = int(input("Escolha o módulo: "))
 
             if not semente:
                 semente = gera_semente_aleatoria(4)
@@ -234,5 +230,5 @@ def menu():
 
         elif escolha == 3:
             break
-    
+
 menu()
